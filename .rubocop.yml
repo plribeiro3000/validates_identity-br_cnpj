@@ -1,0 +1,16 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.6
+
+Layout/LineLength:
+  Max: 150
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
