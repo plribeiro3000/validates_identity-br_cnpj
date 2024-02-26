@@ -2,9 +2,12 @@
 
 require 'rspec'
 require 'active_model'
+require 'shoulda-matchers'
 require 'jazz_fingers'
 
 RSpec.configure do |config|
+  config.include Shoulda::Matchers::ActiveModel
+
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
 
@@ -20,3 +23,4 @@ JazzFingers.configure do |config|
 end
 
 require File.expand_path('lib/validates_identity/br_cnpj')
+require File.expand_path('spec/fake_app/user')
