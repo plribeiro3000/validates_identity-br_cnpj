@@ -29,6 +29,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'activemodel'
-  spec.add_runtime_dependency 'validates_identity'
+  spec.add_runtime_dependency 'validates_identity', '>= 0.5.0'
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
