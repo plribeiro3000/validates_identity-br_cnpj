@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Changed
+
+- Improved Code
+
 ## [0.2.0] - 2024-02-27
 
 ### Fixed

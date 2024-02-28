@@ -40,6 +40,12 @@ class ValidatesIdentity
         @number ||= result[1]
       end
 
+      def striped_number
+        return if number.nil?
+
+        @striped_number ||= number.gsub(%r{[\./-]}, '')
+      end
+
       def striped_value
         return if number.nil?
 
@@ -53,23 +59,29 @@ class ValidatesIdentity
       end
 
       def first_digit_verifier
-        sum = multiply_and_sum([5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2], number)
-        digit_verifier(sum % 11).to_s
+        result = multiply_and_sum([5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2], striped_number)
+        digit_verifier(result)
       end
 
       def second_digit_verifier
-        sum = multiply_and_sum([6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2], "#{number}#{first_digit_verifier}")
-        digit_verifier(sum % 11).to_s
+        result = multiply_and_sum([6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2], "#{striped_number}#{first_digit_verifier}")
+        digit_verifier(result)
       end
 
       def multiply_and_sum(array, number)
-        multiplied = []
-        number.scan(/\d{1}/).each_with_index { |e, i| multiplied[i] = e.to_i * array[i] }
-        multiplied.inject { |s, e| s + e }
+        multiplications = []
+        number.each_char.with_index { |char, index| multiplications[index] = char.to_i * array[index] }
+        multiplications.inject(:+)
       end
 
-      def digit_verifier(rest)
-        rest < 2 ? 0 : 11 - rest
+      def digit_verifier(value)
+        result = value % 11
+
+        if result >= 2
+          (11 - result).to_s
+        else
+          0.to_s
+        end
       end
     end
   end
