@@ -1,4 +1,8 @@
-## [Unreleased]
+## [1.0.0] - 2024-02-29
+
+### Changed
+
+- First deployable version. Ready to Production
 
 ### Changed
 
