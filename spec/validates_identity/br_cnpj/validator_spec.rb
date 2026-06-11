@@ -51,6 +51,22 @@ RSpec.describe ValidatesIdentity::BrCnpj::Validator do
     expect(described_class.new('6910360400016000')).not_to be_valid
   end
 
+  it 'rejects AB12CD34EFGH84' do
+    expect(described_class.new('AB12CD34EFGH84')).not_to be_valid
+  end
+
+  it 'rejects AAAAAAAAAAAA00' do
+    expect(described_class.new('AAAAAAAAAAAA00')).not_to be_valid
+  end
+
+  it 'rejects AB12CD34EFGH8' do
+    expect(described_class.new('AB12CD34EFGH8')).not_to be_valid
+  end
+
+  it 'rejects AB12CD34EFGHAB' do
+    expect(described_class.new('AB12CD34EFGHAB')).not_to be_valid
+  end
+
   it 'accepts blank number' do
     expect(described_class.new('')).to be_valid
   end
@@ -77,5 +93,17 @@ RSpec.describe ValidatesIdentity::BrCnpj::Validator do
 
   it 'accepts 00.000.000/1447-89' do
     expect(described_class.new('00.000.000/1447-89')).to be_valid
+  end
+
+  it 'accepts AB12CD34EFGH83' do
+    expect(described_class.new('AB12CD34EFGH83')).to be_valid
+  end
+
+  it 'accepts AB.12C.D34/EFGH-83' do
+    expect(described_class.new('AB.12C.D34/EFGH-83')).to be_valid
+  end
+
+  it 'accepts ab12cd34efgh83' do
+    expect(described_class.new('ab12cd34efgh83')).to be_valid
   end
 end
