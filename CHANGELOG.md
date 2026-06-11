@@ -1,3 +1,9 @@
+## [1.1.0] - 2026-06-11
+
+### Added
+
+- Alphanumeric CNPJ support
+
 ## [1.0.0] - 2024-02-29
 
 ### Changed
