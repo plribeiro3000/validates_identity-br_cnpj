@@ -3,8 +3,8 @@
 class ValidatesIdentity
   module BrCnpj
     class Validator
-      VALIDATION_REGULAR_EXPRESSION = %r{^(\d{2}\.?\d{3}\.?\d{3}/?\d{4})-?(\d{2})$}.freeze
-      FORMAT_REGULAR_EXPRESSION = /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/.freeze
+      VALIDATION_REGULAR_EXPRESSION = %r{^([A-Z\d]{2}\.?[A-Z\d]{3}\.?[A-Z\d]{3}/?[A-Z\d]{4})-?(\d{2})$}.freeze
+      FORMAT_REGULAR_EXPRESSION = /([A-Z\d]{2})([A-Z\d]{3})([A-Z\d]{3})([A-Z\d]{4})(\d{2})/.freeze
 
       attr_reader :value
 
@@ -16,7 +16,7 @@ class ValidatesIdentity
         return true if value.blank?
         return false unless number
         return false if striped_value.length != 14
-        return false if striped_value.scan(/\d/).uniq.length == 1
+        return false if striped_value[0, 12].chars.uniq.length == 1
 
         verifier_digits == "#{first_digit_verifier}#{second_digit_verifier}"
       end
@@ -31,7 +31,7 @@ class ValidatesIdentity
       private
 
       def result
-        @result ||= VALIDATION_REGULAR_EXPRESSION.match(value)
+        @result ||= VALIDATION_REGULAR_EXPRESSION.match(value.to_s.upcase)
       end
 
       def number
@@ -43,13 +43,13 @@ class ValidatesIdentity
       def striped_number
         return if number.nil?
 
-        @striped_number ||= number.gsub(%r{[\./-]}, '')
+        @striped_number ||= number.gsub(%r{[./-]}, '')
       end
 
       def striped_value
         return if number.nil?
 
-        @striped_value ||= value.gsub(%r{[\./-]}, '')
+        @striped_value ||= value.to_s.upcase.gsub(%r{[./-]}, '')
       end
 
       def verifier_digits
@@ -70,7 +70,7 @@ class ValidatesIdentity
 
       def multiply_and_sum(array, number)
         multiplications = []
-        number.each_char.with_index { |char, index| multiplications[index] = char.to_i * array[index] }
+        number.each_char.with_index { |char, index| multiplications[index] = (char.ord - 48) * array[index] }
         multiplications.inject(:+)
       end
 

@@ -10,5 +10,5 @@ class ValidatesIdentity
 end
 
 ValidatesIdentity.register_legal_identity_type('BR_CNPJ', ValidatesIdentity::BrCnpj::Validator)
-ValidatesIdentity::ShouldaMatchers.register_legal_allowed_values('BR_CNPJ', %w[51.114.450/0001-46 89905757000138])
+ValidatesIdentity::ShouldaMatchers.register_legal_allowed_values('BR_CNPJ', %w[51.114.450/0001-46 89905757000138 AB12CD34EFGH83])
 ValidatesIdentity::ShouldaMatchers.register_legal_disallowed_values('BR_CNPJ', %w[123456 51.114.450/0001-56])
